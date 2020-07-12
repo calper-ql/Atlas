@@ -148,3 +148,19 @@ TEST(AtlasDim, ISS)
     ASSERT_EQ(dim.macroDist, 22);
     ASSERT_TRUE(inRange(atlasDimToDouble(dim), dpos, 1e-9));
 }
+
+TEST(AtlasDim, ISS_NEGATIVE)
+{
+
+    AtlasDim dim;
+    double dpos = 0.0;
+    for (size_t j = 0; j < 3; j++)
+    {
+        auto diff = -7660.32655543;
+        dpos += diff;
+        dim = atlasDimAdd(dim, atlasDoubleToDim(diff));
+    }
+
+    ASSERT_EQ(dim.macroDist, -22);
+    ASSERT_TRUE(inRange(atlasDimToDouble(dim), dpos, 1e-9));
+}
