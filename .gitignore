@@ -24,9 +24,12 @@
 *.lai
 *.la
 *.a
-*.lib
+*.libW
 
 # Executables
 *.exe
 *.out
 *.app
+
+# Build folder
+#build
