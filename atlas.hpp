@@ -16,21 +16,7 @@ struct AtlasDim
     int64_t microDist = 0; // Represents a KM
 };
 
-struct AtlasPosition
-{
-    AtlasDim x;
-    AtlasDim y;
-    AtlasDim z;
-};
-
-struct AtlasVector
-{
-    double x = 0;
-    double y = 0;
-    double z = 0;
-};
-
-AtlasDim atlasDimRegulate(AtlasDim A)
+AtlasDim __atlasDimRegulate(AtlasDim A)
 {
     auto absMicro = abs(A.microDist);
     if (absMicro >= __ATLAS_TEXEL_SIZE_I)
@@ -58,7 +44,7 @@ AtlasDim atlasDimAdd(AtlasDim A, AtlasDim B)
 {
     A.macroDist = (A.macroDist + B.macroDist);
     A.microDist = (A.microDist + B.microDist);
-    A = atlasDimRegulate(A);
+    A = __atlasDimRegulate(A);
     return A;
 }
 
@@ -68,14 +54,6 @@ AtlasDim atlasDimDist(AtlasDim A, AtlasDim B)
     A.microDist -= B.microDist;
     A.macroDist = abs(A.macroDist);
     A.microDist = abs(A.microDist);
-    return A;
-}
-
-AtlasPosition atlasPositionAdd(AtlasPosition A, AtlasPosition B)
-{
-    A.x = atlasDimAdd(A.x, B.x);
-    A.y = atlasDimAdd(A.y, B.y);
-    A.z = atlasDimAdd(A.z, B.z);
     return A;
 }
 
@@ -105,6 +83,28 @@ AtlasDim atlasDoubleToDim(double value)
     }
 
     return dim;
+}
+
+struct AtlasPosition
+{
+    AtlasDim x;
+    AtlasDim y;
+    AtlasDim z;
+};
+
+struct AtlasVector
+{
+    double x = 0;
+    double y = 0;
+    double z = 0;
+};
+
+AtlasPosition atlasPositionAdd(AtlasPosition A, AtlasPosition B)
+{
+    A.x = atlasDimAdd(A.x, B.x);
+    A.y = atlasDimAdd(A.y, B.y);
+    A.z = atlasDimAdd(A.z, B.z);
+    return A;
 }
 
 AtlasVector atlasPositionToVector(AtlasPosition position)
