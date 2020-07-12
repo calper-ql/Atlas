@@ -54,11 +54,11 @@ AtlasVector atlasPositionToVector(AtlasPosition position);
 AtlasPosition atlasVectorToPosition(AtlasVector vector);
 ```
 
-## Integration to code
+### Integration to code
 
 Take atlas.hpp and include it? if doesn't work create issue pls.
 
-## But Can(Jon), how do I use this to render stuff?
+### But Can(Jon), how do I use this to render stuff?
 
 Pass the Position struct to your shader. Once in the shader extract camera position from the position. Translate to vector in your shader (if you look at `atlasDimToDouble` its pretty easy to do).
 
@@ -73,3 +73,7 @@ double atlasDimToDouble(AtlasDim dim)
     return dim.macroDist * __ATLAS_KM + dim.microDist * (__ATLAS_KM / __ATLAS_TEXEL_SIZE_D);
 }
 ```
+
+### Missing features
+
+I need to come up with a way to calculate distance in 3d. Some other math functions are missing as well.
