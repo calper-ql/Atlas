@@ -18,7 +18,7 @@ struct AtlasDim
 };
 ```
 
-This struct can represent approximately 900 light years to sub micro meter accuracy.
+This struct can represent approximately 1800 light years to sub micro meter accuracy.
 
 To use this struct atlas provides with the following functions:
 
