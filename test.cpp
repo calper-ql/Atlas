@@ -94,6 +94,93 @@ TEST(AtlasDim, DimToDoubleAndBack)
     }
 }
 
+TEST(AtlasDim, ISS)
+{
+
+    AtlasDim dim;
+    double dpos = 0.0;
+    for (size_t j = 0; j < 3; j++)
+    {
+        auto diff = 7660.32655543;
+        dpos += diff;
+        dim = atlasDimAdd(dim, atlasDoubleToDim(diff));
+    }
+
+    ASSERT_EQ(dim.macroDist, 22);
+    ASSERT_TRUE(inRange(atlasDimToDouble(dim), dpos, 1e-9));
+}
+
+TEST(AtlasDim, ISS_NEGATIVE)
+{
+
+    AtlasDim dim;
+    double dpos = 0.0;
+    for (size_t j = 0; j < 3; j++)
+    {
+        auto diff = -7660.32655543;
+        dpos += diff;
+        dim = atlasDimAdd(dim, atlasDoubleToDim(diff));
+    }
+
+    ASSERT_EQ(dim.macroDist, -22);
+    ASSERT_TRUE(inRange(atlasDimToDouble(dim), dpos, 1e-9));
+}
+
+TEST(AtlasDim, Sub1)
+{
+
+    auto diff = 7660.32655543;
+    AtlasDim base = {123412314144142, 44241423};
+    AtlasDim dimDiff = atlasDoubleToDim(diff);
+    AtlasDim finalDim = atlasDimAdd(base, dimDiff);
+    AtlasDim subValue = atlasDimSub(finalDim, base);
+
+    ASSERT_EQ(subValue.macroDist, dimDiff.macroDist);
+    ASSERT_EQ(subValue.microDist, dimDiff.microDist);
+}
+
+TEST(AtlasDim, Sub2)
+{
+
+    auto diff = -7660.32655543;
+    AtlasDim base = {123412314144142, 44241423};
+    AtlasDim dimDiff = atlasDoubleToDim(diff);
+    AtlasDim finalDim = atlasDimAdd(base, dimDiff);
+    AtlasDim subValue = atlasDimSub(finalDim, base);
+
+    ASSERT_EQ(subValue.macroDist, dimDiff.macroDist);
+    ASSERT_EQ(subValue.microDist, dimDiff.microDist);
+}
+
+TEST(AtlasDim, Sub3)
+{
+
+    auto diff = 7660.32655543;
+    AtlasDim base = {-123412314144142, -44241423};
+    AtlasDim dimDiff = atlasDoubleToDim(diff);
+    AtlasDim finalDim = atlasDimAdd(base, dimDiff);
+    AtlasDim subValue = atlasDimSub(finalDim, base);
+
+    ASSERT_EQ(subValue.macroDist, dimDiff.macroDist);
+    ASSERT_EQ(subValue.microDist, dimDiff.microDist);
+}
+
+TEST(AtlasDim, Sub4)
+{
+
+    auto diff = -7660.32655543;
+    AtlasDim base = {-123412314144142, -44241423};
+    AtlasDim dimDiff = atlasDoubleToDim(diff);
+    AtlasDim finalDim = atlasDimAdd(base, dimDiff);
+    AtlasDim subValue = atlasDimSub(finalDim, base);
+
+    ASSERT_EQ(subValue.macroDist, dimDiff.macroDist);
+    ASSERT_EQ(subValue.microDist, dimDiff.microDist);
+}
+
+/* ================ */
+// RANDOM WALKS
+
 TEST(AtlasDim, RandomWalk1)
 {
     std::default_random_engine generator;
@@ -131,36 +218,4 @@ TEST(AtlasDim, RandomWalk2)
         }
         ASSERT_TRUE(inRange(atlasDimToDouble(dim), dpos, 1e-6));
     }
-}
-
-TEST(AtlasDim, ISS)
-{
-
-    AtlasDim dim;
-    double dpos = 0.0;
-    for (size_t j = 0; j < 3; j++)
-    {
-        auto diff = 7660.32655543;
-        dpos += diff;
-        dim = atlasDimAdd(dim, atlasDoubleToDim(diff));
-    }
-
-    ASSERT_EQ(dim.macroDist, 22);
-    ASSERT_TRUE(inRange(atlasDimToDouble(dim), dpos, 1e-9));
-}
-
-TEST(AtlasDim, ISS_NEGATIVE)
-{
-
-    AtlasDim dim;
-    double dpos = 0.0;
-    for (size_t j = 0; j < 3; j++)
-    {
-        auto diff = -7660.32655543;
-        dpos += diff;
-        dim = atlasDimAdd(dim, atlasDoubleToDim(diff));
-    }
-
-    ASSERT_EQ(dim.macroDist, -22);
-    ASSERT_TRUE(inRange(atlasDimToDouble(dim), dpos, 1e-9));
 }

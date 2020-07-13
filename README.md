@@ -24,6 +24,7 @@ To use this struct atlas provides with the following functions:
 
 ```cpp
 AtlasDim atlasDimAdd(AtlasDim A, AtlasDim B);
+AtlasDim atlasDimSub(AtlasDim A, AtlasDim B);
 AtlasDim atlasDimDist(AtlasDim A, AtlasDim B);
 std::string atlasDimToString(AtlasDim dim);
 double atlasDimToDouble(AtlasDim dim);

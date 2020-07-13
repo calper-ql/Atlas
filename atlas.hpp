@@ -48,10 +48,17 @@ AtlasDim atlasDimAdd(AtlasDim A, AtlasDim B)
     return A;
 }
 
+AtlasDim atlasDimSub(AtlasDim A, AtlasDim B)
+{
+    A.macroDist = (A.macroDist - B.macroDist);
+    A.microDist = (A.microDist - B.microDist);
+    A = __atlasDimRegulate(A);
+    return A;
+}
+
 AtlasDim atlasDimDist(AtlasDim A, AtlasDim B)
 {
-    A.macroDist -= B.macroDist;
-    A.microDist -= B.microDist;
+    A = atlasDimSub(A, B);
     A.macroDist = abs(A.macroDist);
     A.microDist = abs(A.microDist);
     return A;
