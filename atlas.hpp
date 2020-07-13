@@ -16,7 +16,7 @@ struct AtlasDim
     int64_t microDist = 0; // Represents a KM
 };
 
-AtlasDim __atlasDimRegulate(AtlasDim A)
+inline AtlasDim __atlasDimRegulate(AtlasDim A)
 {
     auto absMicro = abs(A.microDist);
     if (absMicro >= __ATLAS_TEXEL_SIZE_I)
@@ -40,7 +40,7 @@ AtlasDim __atlasDimRegulate(AtlasDim A)
     return A;
 }
 
-AtlasDim atlasDimAdd(AtlasDim A, AtlasDim B)
+inline AtlasDim atlasDimAdd(AtlasDim A, AtlasDim B)
 {
     A.macroDist = (A.macroDist + B.macroDist);
     A.microDist = (A.microDist + B.microDist);
@@ -48,7 +48,7 @@ AtlasDim atlasDimAdd(AtlasDim A, AtlasDim B)
     return A;
 }
 
-AtlasDim atlasDimSub(AtlasDim A, AtlasDim B)
+inline AtlasDim atlasDimSub(AtlasDim A, AtlasDim B)
 {
     A.macroDist = (A.macroDist - B.macroDist);
     A.microDist = (A.microDist - B.microDist);
@@ -56,7 +56,7 @@ AtlasDim atlasDimSub(AtlasDim A, AtlasDim B)
     return A;
 }
 
-AtlasDim atlasDimDist(AtlasDim A, AtlasDim B)
+inline AtlasDim atlasDimDist(AtlasDim A, AtlasDim B)
 {
     A = atlasDimSub(A, B);
     A.macroDist = abs(A.macroDist);
@@ -64,17 +64,17 @@ AtlasDim atlasDimDist(AtlasDim A, AtlasDim B)
     return A;
 }
 
-std::string atlasDimToString(AtlasDim dim)
+inline std::string atlasDimToString(AtlasDim dim)
 {
     return "|" + std::to_string(dim.macroDist) + ", " + std::to_string(dim.microDist) + "|";
 }
 
-double atlasDimToDouble(AtlasDim dim)
+inline double atlasDimToDouble(AtlasDim dim)
 {
     return dim.macroDist * __ATLAS_KM + dim.microDist * (__ATLAS_KM / __ATLAS_TEXEL_SIZE_D);
 }
 
-AtlasDim atlasDoubleToDim(double value)
+inline AtlasDim atlasDoubleToDim(double value)
 {
     AtlasDim dim;
     auto abs_val = abs(value);
@@ -106,7 +106,7 @@ struct AtlasVector
     double z = 0;
 };
 
-AtlasPosition atlasPositionAdd(AtlasPosition A, AtlasPosition B)
+inline AtlasPosition atlasPositionAdd(AtlasPosition A, AtlasPosition B)
 {
     A.x = atlasDimAdd(A.x, B.x);
     A.y = atlasDimAdd(A.y, B.y);
@@ -114,7 +114,7 @@ AtlasPosition atlasPositionAdd(AtlasPosition A, AtlasPosition B)
     return A;
 }
 
-AtlasVector atlasPositionToVector(AtlasPosition position)
+inline AtlasVector atlasPositionToVector(AtlasPosition position)
 {
     auto vec = AtlasVector();
     vec.x = atlasDimToDouble(position.x);
@@ -123,7 +123,7 @@ AtlasVector atlasPositionToVector(AtlasPosition position)
     return vec;
 }
 
-AtlasPosition atlasVectorToPosition(AtlasVector vector)
+inline AtlasPosition atlasVectorToPosition(AtlasVector vector)
 {
     auto pos = AtlasPosition();
     pos.x = atlasDoubleToDim(vector.x);
